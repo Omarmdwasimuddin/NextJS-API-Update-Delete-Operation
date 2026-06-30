@@ -80,4 +80,47 @@ export async function DELETE(request: NextRequest) {
     }
 }
 ```
+
+### deleteMany Operation
+![](https://imgur.com/Z5dNpVk.png)
+
+```bash
+import prisma from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
+
+export async function DELETE(request: NextRequest) {
+    try {
+        const body = await request.json();
+        const { ids } = body; // expecting: { ids: ["id1", "id2", "id3"] }
+
+        if (!ids || !Array.isArray(ids) || ids.length === 0) {
+            return NextResponse.json(
+                { status: "failed", message: "ids array is required" },
+                { status: 400 }
+            );
+        }
+
+        const employeeDelete = await prisma.employee.deleteMany({
+            where: {
+                id: { in: ids }
+            }
+        });
+
+        return NextResponse.json(
+            {
+                status: "success",
+                message: `Deleted ${employeeDelete.count} employee record(s)`,
+                data: employeeDelete
+            },
+            { status: 200 }
+        );
+    } catch (error) {
+        console.log("Bulk delete operation error:", error);
+        return NextResponse.json(
+            { status: "failed", message: "Bulk delete operation failed!" },
+            { status: 500 }
+        );
+    }
+}
+```
 ---
