@@ -17,7 +17,7 @@ export async function PUT(request: NextRequest) {
 
         if (!id) {
             return NextResponse.json(
-                {status: "Employee id is required!"},
+                {status: "Failed", message: "Missing 'id' query parameter"},
                 {status: 400}
             )
         }
