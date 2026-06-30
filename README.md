@@ -23,7 +23,7 @@ export async function PUT(request: NextRequest) {
         }
 
         const updateEmployeeData = await prisma.employee.update({
-            where: {id:id},
+            where: { id },
             data: jsonBody,
         })
 
