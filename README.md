@@ -41,3 +41,11 @@ export async function PUT(request: NextRequest) {
 }
 ```
 ---
+
+### Delete operation
+![]()
+
+```bash
+
+```
+---
